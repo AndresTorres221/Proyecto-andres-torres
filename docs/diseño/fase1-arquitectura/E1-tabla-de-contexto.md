@@ -1,3 +1,3 @@
 # Tabla de Contexto
 
-![Tabla de contexto](../diseño/imagenes/tabla-contexto.jpg)
+![Tabla de contexto](../imagenes/tabla-contexto.jpg)
