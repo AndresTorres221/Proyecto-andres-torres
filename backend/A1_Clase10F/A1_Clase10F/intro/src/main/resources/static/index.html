@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Personas</title>
+</head>
+<body>
+    <h1>Listado de Personas</h1>
+    <ul id="person-list"></ul>
+
+    <h2>Agregar Persona</h2>
+    <form id="person-form">
+        <input type="text" id="name" placeholder="Nombre" required>
+        <input type="number" id="age" placeholder="Edad" required>
+        <button type="submit">Agregar</button>
+    </form>
+
+    <script>
+        const listEl = document.getElementById("person-list");
+        const form = document.getElementById("person-form");
+
+        // Función para obtener personas
+        async function fetchPersons() {
+            const res = await fetch("/people");
+            const persons = await res.json();
+            listEl.innerHTML = ""; // limpiar lista
+            persons.forEach(p => {
+                const li = document.createElement("li");
+                li.textContent = `${p.id} - ${p.name} - ${p.age} años`;
+                listEl.appendChild(li);
+            });
+        }
+
+        // Inicializar listado
+        fetchPersons();
+
+        // Enviar nuevo POST desde el formulario
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const age = parseInt(document.getElementById("age").value, 10);
+            await fetch("/people", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, age })
+            });
+            form.reset();
+            fetchPersons(); // refrescar lista
+        });
+    </script>
+</body>
+</html>

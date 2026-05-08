@@ -20,7 +20,7 @@ Arquitectura en capas
 
 ---
 
-## 🧠 Decisión #02
+##  Decisión #02
 
 ### ¿Qué decidí?
 Usar relaciones JPA entre entidades (OneToMany, ManyToOne, OneToOne).
