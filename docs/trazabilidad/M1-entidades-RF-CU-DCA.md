@@ -1,6 +1,5 @@
-# Entidades externas
 
-# Tabla 1: Entidades externas
+# Tabla 1: Entidades Externas
 
 | Entidad externa | RF | Caso de uso | Módulo |
 |----------------|----|-------------|--------|
