@@ -1,145 +1,137 @@
-# Bitácora del Proyecto
+#  Bitácora de Desarrollo - Proyecto Banco de Alimentos
 
 ---
 
-## Entrada #01  
-**Fecha:** 07/05/2026  
+##  Iteración 01 - Estructura inicial del proyecto
 
-### ¿Qué hice?
+Se creó la estructura base del proyecto en Spring Boot utilizando arquitectura en capas:
 
-Se creó el repositorio del proyecto en GitHub y se configuró la estructura inicial de carpetas y archivos utilizando VS Code. Posteriormente, se desarrolló y documentó toda la fase de análisis del proyecto, incluyendo el planteamiento del problema, espina de pescado, alcance, objetivos, técnicas de elicitación y casos de uso.
+- Controller
+- Service
+- Repository
+- Model
 
-También se agregaron y organizaron archivos de apoyo como README.md, BITACORA.md y DECISIONES.md para mantener la documentación y trazabilidad del proyecto.
-
----
-
-### ¿Qué problema encontré?
-
-Durante la organización inicial del repositorio se presentaron inconvenientes con la visualización de carpetas vacías en GitHub, lo que generó confusión en la estructura del proyecto. Además, algunos cambios realizados en ciertos archivos no se reflejaban correctamente debido a que no habían sido guardados antes de ejecutar los comandos de Git.
-
-También fue necesario reorganizar algunas carpetas y documentos para mantener una estructura más clara.
+Se configuró la conexión a base de datos MySQL y se verificó el funcionamiento inicial del proyecto.
 
 ---
 
-### ¿Cómo lo resolví?
+##  Iteración 02 - Modelado de entidades
 
-Se utilizaron archivos `.gitkeep` para permitir que GitHub mostrara las carpetas vacías. Se verificó el guardado correcto de los archivos antes de realizar commits y pushes.
+Se diseñaron y crearon las entidades principales del sistema:
 
-Finalmente, se reorganizó la estructura del repositorio desde VS Code para asegurar orden y trazabilidad.
+- Usuario
+- Rol
+- Donante
+- Producto
+- Categoría
+- Estado de conservación
+- Donación
+- Detalle de donación
+- Inventario
 
----
+Se establecieron relaciones JPA:
 
-### ¿Usé IA?
-
-Sí
-
----
-
-### ¿Qué ajusté del resultado?
-
-Se ajustó la estructura del repositorio y se organizó la fase de análisis de manera completa y coherente.
-
----
-
-## Entrada #02  
-**Fecha:** 07/05/2026  
-
-### ¿Qué hice?
-
-Se avanzó en la fase de análisis hacia la fase de diseño del sistema.
-
-Se inició la fase de arquitectura y posteriormente la fase de datos, donde se creó el diccionario de datos en Markdown y Excel. También se estructuraron los modelos de datos del sistema.
-
-Se organizó la relación entre documentación en Markdown y archivos Excel dentro del repositorio.
+- OneToMany (Donación → DetalleDonación)
+- ManyToOne (DetalleDonación → Producto / Donación)
+- OneToOne (Inventario → Producto)
 
 ---
 
-### ¿Qué problema encontré?
+##  Iteración 03 - Implementación de API REST
 
-- Conflictos al sincronizar cambios entre repositorio local y remoto en Git.
-- Conflictos de merge en archivos como tabla de contexto.
-- Problemas al exportar imágenes desde Word con pérdida de calidad.
-- Orden inesperado de archivos en GitHub por numeración.
+Se implementaron los controladores REST para:
 
----
+- Gestión de donaciones
+- Gestión de productos
+- Gestión de donantes
+- Gestión de inventario
 
-### ¿Cómo lo resolví?
-
-- Se resolvieron conflictos manualmente en Git.
-- Se aplicó correctamente el flujo git pull → add → commit → push.
-- Se organizó la carpeta de imágenes en el repositorio.
-- Se entendió el orden alfabético de GitHub.
+Se probaron endpoints en Postman para validación funcional.
 
 ---
 
-### ¿Usé IA?
+##  Iteración 04 - Lógica de negocio (Inventario)
 
-Sí
+Se implementó la lógica de actualización automática del inventario:
 
----
+- Cada vez que se registra una donación
+- Se actualiza el stock de productos automáticamente
 
-### ¿Qué ajusté del resultado?
-
-Se mejoró la organización del repositorio y la estructura de la fase de arquitectura y datos.
-
----
-
-## Entrada #03  
-**Fecha:** 07/05/2026  
-
-### ¿Qué hice?
-
-Se desarrolló completamente la fase de diseño del sistema del Banco de Alimentos.
-
-Se construyeron 13 tablas fundamentales del sistema, incluyendo:
-
-- Entidades externas
-- Arquetipos → CU → RF
-- Componentes del sistema
-- Nodos → protocolos → RNF
-- Entidades → reglas de negocio
-- Relaciones MER
-- Modelo relacional (PK, FK, 3FN)
-- Clases → métodos
-- Secuencias → flujos
-- Estados del sistema
-- Pantallas → roles → wireframes
-- Prototipos → interacciones
-
-Se consolidó la trazabilidad completa del sistema desde análisis hasta interfaz.
+Esto se realizó en la capa Service.
 
 ---
 
-### ¿Qué problema encontré?
+##  Iteración 05 - Manejo de relaciones y persistencia
 
-- Inconsistencias en nombres de entidades.
-- Dificultades para mantener orden en GitHub.
-- Confusión inicial entre RF, CU y módulos.
-- Organización de tablas provenientes de Word.
+Se corrigieron problemas de relaciones entre entidades:
 
----
-
-### ¿Cómo lo resolví?
-
-- Se estandarizaron nombres y estructura de tablas.
-- Se organizó correctamente el repositorio.
-- Se aclaró la relación entre RF, CU y componentes.
-- Se convirtió toda la información a Markdown.
+- Asociación de detalles con donación
+- Persistencia en cascada (CascadeType.ALL)
+- Corrección de errores de integridad referencial
 
 ---
 
-### ¿Usé IA?
+##  Iteración 06 - Problemas de serialización JSON
 
-Sí
+Se resolvieron problemas de:
+
+- Ciclos infinitos en JSON
+- Exceso de profundidad en objetos
+- Datos nulos en respuestas
+
+Se aplicaron soluciones como:
+
+- @JsonIgnore
+- Ajuste de relaciones JPA
+- Optimización de carga de datos
 
 ---
 
-### ¿Qué ajusté del resultado?
+##  Iteración 07 - Implementación de DTOs y Mapper
 
-Se consolidó toda la fase de diseño del sistema, mejorando la trazabilidad, coherencia y estructura del proyecto en GitHub.
+Se implementó una arquitectura basada en DTOs para mejorar la respuesta de la API.
+
+- Se crearon DTOs para Donación, Donante, Producto y DetalleDonación
+- Se implementó un Mapper manual para conversión de entidades a DTOs
+- Se mejoró la claridad y limpieza de las respuestas JSON
 
 ---
 
-## Observación general del proyecto
+##  Iteración 08 - Trazabilidad diseño → código
 
-El proyecto evolucionó desde una fase de análisis hasta un diseño completo del sistema de un Banco de Alimentos, integrando arquitectura, datos, componentes, comportamiento e interfaz, manteniendo trazabilidad completa entre todas las fases.
+Se documentaron los métodos principales del sistema con trazabilidad:
+
+- CU-01 | RF-01 → Registrar donación
+- CU-02 | RF-03 → Actualizar inventario
+- CU-01 | RF-04 → Listar donaciones
+
+Esto permitió relacionar el diseño del sistema con su implementación en código.
+
+---
+
+##  Iteración 09 - Pruebas finales en Postman
+
+Se realizaron pruebas completas del sistema:
+
+- Creación de donaciones con detalles
+- Consulta de donaciones con DTOs
+- Verificación de actualización automática del inventario
+
+Resultados:
+
+✔ API funcional  
+✔ Datos coherentes  
+✔ Inventario actualizado correctamente  
+✔ Respuestas JSON limpias  
+
+---
+
+##  Estado final del proyecto
+
+El sistema se encuentra funcional con:
+
+- Arquitectura en capas implementada
+- API REST completa
+- Integración entre donaciones e inventario
+- Uso de DTOs para respuestas limpias
+- Base de datos relacional normalizada
