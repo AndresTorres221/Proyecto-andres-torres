@@ -1,8 +1,8 @@
-# 📌 Registro de decisiones técnicas del proyecto
+#  Registro de decisiones técnicas del proyecto
 
 ---
 
-## 🧠 Decisión #01
+##  Decisión #01
 
 ### ¿Qué decidí?
 Implementar una arquitectura en capas (Controller, Service, Repository, Model) utilizando Spring Boot.

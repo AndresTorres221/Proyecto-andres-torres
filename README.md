@@ -1,6 +1,6 @@
-# 📦 Proyecto Backend - Sistema de Banco de Alimentos
+#  Proyecto Backend - Sistema de Banco de Alimentos
 
-## 🧠 ¿Qué módulo implementas?
+##  ¿Qué módulo implementas?
 
 En este proyecto se implementa el módulo de **Gestión de Donaciones**, el cual permite registrar donaciones realizadas por donantes, asociar productos donados, y actualizar automáticamente el inventario disponible en el sistema.
 
