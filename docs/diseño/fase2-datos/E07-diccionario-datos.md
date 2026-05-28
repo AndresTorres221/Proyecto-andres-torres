@@ -113,3 +113,4 @@
 #  CONCLUSIÓN
 
 Este sistema permite gestionar usuarios, productos, donaciones e inventario con relaciones entre entidades y control de stock automático.
+
