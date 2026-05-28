@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-IntroApplication<intro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.desarrolloweb.intro.IntroApplication",
+            "projectName": "intro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-IntroApplication<intro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.desarrolloweb.bancoalimentos.IntroApplication",
+            "projectName": "intro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
