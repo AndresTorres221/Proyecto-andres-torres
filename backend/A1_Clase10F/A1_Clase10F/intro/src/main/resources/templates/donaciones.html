@@ -152,6 +152,43 @@
         </tr>
     </table>
 
+    <!-- ===================== -->
+<!-- CRUD DETALLE DONACIONES -->
+<!-- ===================== -->
+<h3>Detalle de Donaciones</h3>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Donación</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Acciones</th>
+    </tr>
+
+    <tr th:each="d : ${detalles}">
+
+        <td th:text="${d.id}"></td>
+
+        <td th:text="${d.donacion != null ? d.donacion.id : 'N/A'}"></td>
+
+        <td th:text="${d.producto != null ? d.producto.nombre : 'N/A'}"></td>
+
+        <td th:text="${d.cantidad}"></td>
+
+        <td>
+            <a th:href="@{'/vista/detalle-donaciones/editar/' + ${d.id}}">
+                Editar
+            </a>
+
+            <a th:href="@{'/vista/detalle-donaciones/eliminar/' + ${d.id}}">
+                Eliminar
+            </a>
+        </td>
+
+    </tr>
+</table>
+
 </div>
 
 </body>

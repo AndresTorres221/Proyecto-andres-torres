@@ -14,12 +14,12 @@ public class Donante {
     private String telefono;
     private String direccion;
 
-    // 🔥 Relación con Usuario
+    
     @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    // GETTERS Y SETTERS
+
 
     public Long getId() {
         return id;

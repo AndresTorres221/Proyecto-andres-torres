@@ -1,7 +1,8 @@
 package com.desarrolloweb.intro.controller;
-import com.desarrolloweb.intro.service.ProductoService;
+
 import com.desarrolloweb.intro.dto.DonacionDTO;
 import com.desarrolloweb.intro.model.Donacion;
+import com.desarrolloweb.intro.service.DetalleDonacionService;
 import com.desarrolloweb.intro.service.DonacionService;
 import com.desarrolloweb.intro.service.DonanteService;
 import com.desarrolloweb.intro.service.ProductoService;
@@ -17,14 +18,17 @@ public class DonacionVistaController {
     private final DonacionService donacionService;
     private final DonanteService donanteService;
     private final ProductoService productoService;
+    private final DetalleDonacionService detalleService;
 
     public DonacionVistaController(DonacionService donacionService,
-                                DonanteService donanteService,
-                                ProductoService productoService) {
-    this.donacionService = donacionService;
-    this.donanteService = donanteService;
-    this.productoService = productoService;
-}
+                                    DonanteService donanteService,
+                                    ProductoService productoService,
+                                    DetalleDonacionService detalleService) {
+        this.donacionService = donacionService;
+        this.donanteService = donanteService;
+        this.productoService = productoService;
+        this.detalleService = detalleService;
+    }
 
     // LISTAR
     @GetMapping
@@ -34,11 +38,12 @@ public class DonacionVistaController {
         model.addAttribute("donantes", donanteService.listar());
         model.addAttribute("donacion", new Donacion());
         model.addAttribute("productos", productoService.listar());
+        model.addAttribute("detalles", detalleService.listar());
 
         return "donaciones";
     }
 
-    // GUARDAR (CREAR Y ACTUALIZAR)
+    // GUARDAR
     @PostMapping
     public String guardar(@ModelAttribute Donacion donacion) {
 
@@ -49,17 +54,18 @@ public class DonacionVistaController {
 
     // EDITAR
     @GetMapping("/editar/{id}")
-public String editar(@PathVariable Long id, Model model) {
+    public String editar(@PathVariable Long id, Model model) {
 
-    DonacionDTO donacion = donacionService.buscar(id);
+        DonacionDTO donacion = donacionService.buscar(id);
 
-    model.addAttribute("donacion", donacion);
-    model.addAttribute("donaciones", donacionService.listar());
-    model.addAttribute("donantes", donanteService.listar());
-    model.addAttribute("productos", productoService.listar());
+        model.addAttribute("donacion", donacion);
+        model.addAttribute("donaciones", donacionService.listar());
+        model.addAttribute("donantes", donanteService.listar());
+        model.addAttribute("productos", productoService.listar());
+        model.addAttribute("detalles", detalleService.listar());
 
-    return "donaciones";
-}
+        return "donaciones";
+    }
 
     // ELIMINAR
     @GetMapping("/eliminar/{id}")
