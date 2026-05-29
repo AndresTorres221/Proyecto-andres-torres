@@ -126,6 +126,76 @@ Resultados:
 
 ---
 
+Iteración 10 - Implementación de interfaz web (Thymeleaf)
+
+Se implementó la capa visual del sistema utilizando Thymeleaf para los módulos principales, especialmente:
+
+- Productos (CRUD completo)
+- Donaciones
+- Detalle de donaciones
+
+Se diseñaron formularios con binding automático hacia Spring MVC.
+
+Problemas iniciales:
+- Los formularios no enviaban correctamente los datos de relaciones (FK)
+- Error en el manejo de objetos relacionados en selects
+
+Solución:
+- Uso de `th:object` y `th:field`
+- Corrección de bindings en entidades relacionadas
+- Ajuste de controladores para enviar modelos completos a la vista
+
+Resultado:
+✔ Interfaz funcional conectada al backend
+✔ CRUD visual operativo
+
+---
+
+Iteración 11 - Problemas en edición y eliminación (Detalle de donación)
+
+Durante la implementación del CRUD visual del módulo de detalle de donaciones se presentaron errores en:
+
+- Botón de eliminar (no ejecutaba acción en base de datos)
+- Botón de editar (redirección correcta pero sin actualización real de datos)
+
+Causas identificadas:
+- Uso incorrecto de `name` en formularios en lugar de `th:field`
+- Falta de `th:object` en el formulario de edición
+- Envío incorrecto de entidades relacionadas (ManyToOne mal enlazado)
+- Problemas de binding entre Thymeleaf y Spring MVC
+
+Solución aplicada:
+- Corrección completa del formulario Thymeleaf
+- Uso de `th:object="${detalle}"`
+- Envío correcto de entidades completas en selects
+- Ajuste de endpoints en controller para edición y eliminación
+
+Resultado:
+✔ CRUD de detalle de donación funcional
+✔ Edición y eliminación operativas
+
+---
+
+Iteración 12 - Estabilización del sistema CRUD visual
+
+Se realizaron ajustes finales para estabilizar el sistema completo de interfaz web:
+
+- Validación de formularios
+- Corrección de redirecciones después de POST
+- Ajuste de rutas en controladores `/vista/...`
+- Revisión de consistencia entre frontend y backend
+
+Se logró integrar completamente:
+
+- Backend (Spring Boot + JPA)
+- Frontend (Thymeleaf)
+- Base de datos relacional
+
+Resultado final:
+✔ Sistema CRUD completo funcional
+✔ Interfaz web operativa
+✔ Integración completa MVC
+
 ##  Estado final del proyecto
 
 El sistema se encuentra funcional con:
