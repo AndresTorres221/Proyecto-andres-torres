@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Donaciones</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            margin: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>CRUD DE DONACIONES</h1>
+
+<!-- FORMULARIO -->
+<form th:action="@{/vista/donaciones}" method="post">
+
+    <!-- ID oculto (para editar) -->
+    <input type="hidden"
+           name="id"
+           th:value="${donacion != null ? donacion.id : ''}">
+
+    <!-- FECHA -->
+    <input type="date"
+           name="fecha"
+           required
+           th:value="${donacion != null ? donacion.fecha : ''}">
+
+    <!-- DONANTE -->
+    <select name="donante.id" required>
+
+        <option value="">Seleccione donante</option>
+
+        <option th:each="d : ${donantes}"
+                th:value="${d.id}"
+                th:text="${d.nombre}"
+                th:selected="${donacion != null and donacion.donante != null and donacion.donante.id == d.id}">
+        </option>
+
+    </select>
+
+    <button type="submit">
+        <span th:text="${donacion != null ? 'Actualizar' : 'Guardar'}"></span>
+    </button>
+
+</form>
+
+<hr>
+
+<!-- TABLA -->
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Donante</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr th:each="d : ${donaciones}">
+
+            <td th:text="${d.id}"></td>
+            <td th:text="${d.fecha}"></td>
+            <td th:text="${d.donante.nombre}"></td>
+
+            <td>
+
+                <!-- EDITAR -->
+                <a th:href="@{'/vista/donaciones/editar/' + ${d.id}}">
+                    Editar
+                </a>
+
+                <!-- ELIMINAR -->
+                <a th:href="@{'/vista/donaciones/eliminar/' + ${d.id}}">
+                    Eliminar
+                </a>
+
+            </td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+</html>

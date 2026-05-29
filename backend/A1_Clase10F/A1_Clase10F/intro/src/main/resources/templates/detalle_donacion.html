@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Donación</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            margin: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>DETALLE DE DONACIONES</h1>
+
+<!-- FORMULARIO -->
+<form th:action="@{/vista/detalle-donaciones}" method="post">
+
+    <!-- ID oculto -->
+    <input type="hidden"
+           name="id"
+           th:value="${detalle != null ? detalle.id : ''}">
+
+    <!-- DONACIÓN -->
+    <select name="donacion.id" required>
+
+        <option value="">Seleccione donación</option>
+
+        <option th:each="d : ${donaciones}"
+                th:value="${d.id}"
+                th:text="${d.id}">
+        </option>
+
+    </select>
+
+    <!-- PRODUCTO -->
+    <select name="producto.id" required>
+
+        <option value="">Seleccione producto</option>
+
+        <option th:each="p : ${productos}"
+                th:value="${p.id}"
+                th:text="${p.nombre}">
+        </option>
+
+    </select>
+
+    <!-- CANTIDAD -->
+    <input type="number"
+           name="cantidad"
+           placeholder="Cantidad"
+           required
+           min="1"
+           th:value="${detalle != null ? detalle.cantidad : ''}">
+
+    <button type="submit">
+        <span th:text="${detalle != null ? 'Actualizar' : 'Agregar'}"></span>
+    </button>
+
+</form>
+
+<hr>
+
+<!-- TABLA -->
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Donación</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr th:each="d : ${detalles}">
+
+            <td th:text="${d.id}"></td>
+            <td th:text="${d.donacion.id}"></td>
+            <td th:text="${d.producto.nombre}"></td>
+            <td th:text="${d.cantidad}"></td>
+
+            <td>
+
+                <a th:href="@{'/vista/detalle-donaciones/editar/' + ${d.id}}">
+                    Editar
+                </a>
+
+                <a th:href="@{'/vista/detalle-donaciones/eliminar/' + ${d.id}}">
+                    Eliminar
+                </a>
+
+            </td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+</html>

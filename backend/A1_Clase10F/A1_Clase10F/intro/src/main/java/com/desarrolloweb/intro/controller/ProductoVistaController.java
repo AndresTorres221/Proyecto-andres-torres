@@ -39,7 +39,7 @@ public class ProductoVistaController {
         return "productos";
     }
 
-    // GUARDAR
+
     @PostMapping
     public String guardar(@ModelAttribute Producto producto) {
         service.guardar(producto);
