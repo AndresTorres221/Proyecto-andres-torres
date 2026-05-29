@@ -36,21 +36,27 @@ public class DetalleDonacionVistaController {
         return "detalle_donacion";
     }
 
-    // GUARDAR (CREAR / ACTUALIZAR)
+    
     @PostMapping
-    public String guardar(@ModelAttribute DetalleDonacion detalle) {
+public String guardar(@ModelAttribute DetalleDonacion detalle) {
 
-        // 🔥 REGLA DE NEGOCIO
-        if (detalle.getCantidad() == null || detalle.getCantidad() <= 0) {
-            throw new RuntimeException("La cantidad debe ser mayor a 0");
-        }
-
-        detalleService.guardar(detalle);
-
-        return "redirect:/vista/detalle-donaciones";
+    if (detalle.getDonacion() == null || detalle.getDonacion().getId() == null) {
+        throw new RuntimeException("Donación no seleccionada");
     }
 
-    // EDITAR
+    if (detalle.getProducto() == null || detalle.getProducto().getId() == null) {
+        throw new RuntimeException("Producto no seleccionado");
+    }
+
+    if (detalle.getCantidad() == null || detalle.getCantidad() <= 0) {
+        throw new RuntimeException("Cantidad inválida");
+    }
+
+    detalleService.guardar(detalle);
+
+    return "redirect:/vista/detalle-donaciones";
+}
+  
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
 
@@ -64,7 +70,7 @@ public class DetalleDonacionVistaController {
         return "detalle_donacion";
     }
 
-    // ELIMINAR
+    
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
 

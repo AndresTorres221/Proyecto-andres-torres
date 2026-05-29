@@ -57,33 +57,28 @@
 <!-- FORMULARIO -->
 <form th:action="@{/vista/detalle-donaciones}" method="post">
 
-    <!-- ID oculto -->
     <input type="hidden"
            name="id"
            th:value="${detalle != null ? detalle.id : ''}">
 
     <!-- DONACIÓN -->
     <select name="donacion.id" required>
-
         <option value="">Seleccione donación</option>
 
         <option th:each="d : ${donaciones}"
                 th:value="${d.id}"
-                th:text="${d.id}">
+                th:text="${d.id + ' - ' + d.donante.nombre}">
         </option>
-
     </select>
 
     <!-- PRODUCTO -->
     <select name="producto.id" required>
-
         <option value="">Seleccione producto</option>
 
         <option th:each="p : ${productos}"
                 th:value="${p.id}"
                 th:text="${p.nombre}">
         </option>
-
     </select>
 
     <!-- CANTIDAD -->
@@ -120,12 +115,15 @@
         <tr th:each="d : ${detalles}">
 
             <td th:text="${d.id}"></td>
-            <td th:text="${d.donacion.id}"></td>
-            <td th:text="${d.producto.nombre}"></td>
+
+            <!-- MEJORADO -->
+            <td th:text="${d.donacion != null ? d.donacion.id + ' - ' + d.donacion.donante.nombre : 'N/A'}"></td>
+
+            <td th:text="${d.producto != null ? d.producto.nombre : 'N/A'}"></td>
+
             <td th:text="${d.cantidad}"></td>
 
             <td>
-
                 <a th:href="@{'/vista/detalle-donaciones/editar/' + ${d.id}}">
                     Editar
                 </a>
@@ -133,7 +131,6 @@
                 <a th:href="@{'/vista/detalle-donaciones/eliminar/' + ${d.id}}">
                     Eliminar
                 </a>
-
             </td>
 
         </tr>

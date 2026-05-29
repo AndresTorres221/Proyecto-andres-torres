@@ -6,32 +6,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.desarrolloweb.intro.model.DetalleDonacion;
+import com.desarrolloweb.intro.model.Donacion;
+import com.desarrolloweb.intro.model.Producto;
 import com.desarrolloweb.intro.repository.DetalleDonacionRepository;
+import com.desarrolloweb.intro.repository.DonacionRepository;
+import com.desarrolloweb.intro.repository.ProductoRepository;
 import com.desarrolloweb.intro.service.DetalleDonacionService;
 
 @Service
 public class DetalleDonacionServiceImpl implements DetalleDonacionService {
 
     @Autowired
-    private DetalleDonacionRepository repo;
+    private DetalleDonacionRepository detalleRepository;
+
+    @Autowired
+    private DonacionRepository donacionRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
 
     @Override
     public DetalleDonacion guardar(DetalleDonacion detalle) {
-        return repo.save(detalle);
+
+        Donacion donacion = donacionRepository.findById(detalle.getDonacion().getId())
+                .orElseThrow(() -> new RuntimeException("Donación no existe"));
+
+        Producto producto = productoRepository.findById(detalle.getProducto().getId())
+                .orElseThrow(() -> new RuntimeException("Producto no existe"));
+
+        detalle.setDonacion(donacion);
+        detalle.setProducto(producto);
+
+        return detalleRepository.save(detalle);
     }
 
     @Override
     public List<DetalleDonacion> listar() {
-        return repo.findAll();
+        return detalleRepository.findAll();
     }
 
     @Override
-public DetalleDonacion buscar(Long id) {
-    return repo.findById(id).orElse(null);
-}
+    public DetalleDonacion buscar(Long id) {
+        return detalleRepository.findById(id).orElse(null);
+    }
 
     @Override
     public void eliminar(Long id) {
-        repo.deleteById(id);
+        detalleRepository.deleteById(id);
     }
 }

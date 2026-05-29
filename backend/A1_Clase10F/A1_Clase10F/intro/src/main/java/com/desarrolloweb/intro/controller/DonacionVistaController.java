@@ -1,9 +1,11 @@
 package com.desarrolloweb.intro.controller;
-
+import com.desarrolloweb.intro.service.ProductoService;
 import com.desarrolloweb.intro.dto.DonacionDTO;
 import com.desarrolloweb.intro.model.Donacion;
 import com.desarrolloweb.intro.service.DonacionService;
 import com.desarrolloweb.intro.service.DonanteService;
+import com.desarrolloweb.intro.service.ProductoService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +16,15 @@ public class DonacionVistaController {
 
     private final DonacionService donacionService;
     private final DonanteService donanteService;
+    private final ProductoService productoService;
 
     public DonacionVistaController(DonacionService donacionService,
-                                    DonanteService donanteService) {
-        this.donacionService = donacionService;
-        this.donanteService = donanteService;
-    }
+                                DonanteService donanteService,
+                                ProductoService productoService) {
+    this.donacionService = donacionService;
+    this.donanteService = donanteService;
+    this.productoService = productoService;
+}
 
     // LISTAR
     @GetMapping
@@ -28,6 +33,7 @@ public class DonacionVistaController {
         model.addAttribute("donaciones", donacionService.listar());
         model.addAttribute("donantes", donanteService.listar());
         model.addAttribute("donacion", new Donacion());
+        model.addAttribute("productos", productoService.listar());
 
         return "donaciones";
     }
@@ -50,6 +56,7 @@ public String editar(@PathVariable Long id, Model model) {
     model.addAttribute("donacion", donacion);
     model.addAttribute("donaciones", donacionService.listar());
     model.addAttribute("donantes", donanteService.listar());
+    model.addAttribute("productos", productoService.listar());
 
     return "donaciones";
 }

@@ -1,133 +1,158 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>CRUD Donaciones</title>
+<meta charset="UTF-8">
+<title>Sistema de Donaciones</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 30px;
-        }
+<style>
+    body {
+        font-family: Arial;
+        background: #eef1f5;
+        margin: 0;
+    }
 
-        h1 {
-            text-align: center;
-        }
+    h1 {
+        text-align: center;
+        padding: 15px;
+        background: white;
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+    }
 
-        form {
-            margin-bottom: 20px;
-        }
+    .container {
+        max-width: 1000px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
 
-        input, select {
-            padding: 8px;
-            margin: 5px;
-        }
+    h3 {
+        text-align: center;
+        background: #f2f2f2;
+        padding: 8px;
+        border-radius: 5px;
+    }
 
-        button {
-            padding: 8px 15px;
-            cursor: pointer;
-        }
+    form {
+        background: #fafafa;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+    }
 
-        th, td {
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: center;
-        }
+    button {
+        width: 100%;
+        padding: 8px;
+        background: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-        th {
-            background-color: #f2f2f2;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
 
-        a {
-            margin: 5px;
-        }
-    </style>
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
 
+    th {
+        background: #f2f2f2;
+    }
+</style>
 </head>
 
 <body>
 
-<h1>CRUD DE DONACIONES</h1>
+<h1>SISTEMA DE DONACIONES</h1>
 
-<!-- FORMULARIO -->
-<form th:action="@{/vista/donaciones}" method="post">
+<div class="container">
 
-    <!-- ID oculto (para editar) -->
-    <input type="hidden"
-           name="id"
-           th:value="${donacion != null ? donacion.id : ''}">
+    <!-- ===================== -->
+    <!-- CREAR DONACIÓN -->
+    <!-- ===================== -->
+    <h3>Crear Donación</h3>
 
-    <!-- FECHA -->
-    <input type="date"
-           name="fecha"
-           required
-           th:value="${donacion != null ? donacion.fecha : ''}">
+    <form th:action="@{/vista/donaciones}" method="post">
 
-    <!-- DONANTE -->
-    <select name="donante.id" required>
+        <input type="date" name="fecha" required>
 
-        <option value="">Seleccione donante</option>
+        <select name="donante.id" required>
+            <option value="">Seleccione donante</option>
 
-        <option th:each="d : ${donantes}"
-                th:value="${d.id}"
-                th:text="${d.nombre}"
-                th:selected="${donacion != null and donacion.donante != null and donacion.donante.id == d.id}">
-        </option>
+            <option th:each="d : ${donantes}"
+                    th:value="${d.id}"
+                    th:text="${d.nombre}">
+            </option>
+        </select>
 
-    </select>
+        <button type="submit">Guardar Donación</button>
+    </form>
 
-    <button type="submit">
-        <span th:text="${donacion != null ? 'Actualizar' : 'Guardar'}"></span>
-    </button>
+    <!-- ===================== -->
+    <!-- AGREGAR DETALLE -->
+    <!-- ===================== -->
+    <h3>Agregar Productos a Donación</h3>
 
-</form>
+    <form th:action="@{/vista/detalle-donaciones}" method="post">
 
-<hr>
+        <select name="donacion.id" required>
+            <option value="">Seleccione donación</option>
 
-<!-- TABLA -->
-<table>
+            <option th:each="d : ${donaciones}"
+                    th:value="${d.id}"
+                    th:text="${d.id + ' - ' + d.donante.nombre}">
+            </option>
+        </select>
 
-    <thead>
+        <select name="producto.id" required>
+            <option value="">Seleccione producto</option>
+
+            <option th:each="p : ${productos}"
+                    th:value="${p.id}"
+                    th:text="${p.nombre}">
+            </option>
+        </select>
+
+        <input type="number" name="cantidad" placeholder="Cantidad" min="1" required>
+
+        <button type="submit">Agregar Producto</button>
+    </form>
+
+    <!-- ===================== -->
+    <!-- LISTA DONACIONES -->
+    <!-- ===================== -->
+    <h3>Listado de Donaciones</h3>
+
+    <table>
         <tr>
             <th>ID</th>
             <th>Fecha</th>
             <th>Donante</th>
-            <th>Acciones</th>
         </tr>
-    </thead>
-
-    <tbody>
 
         <tr th:each="d : ${donaciones}">
-
             <td th:text="${d.id}"></td>
             <td th:text="${d.fecha}"></td>
             <td th:text="${d.donante.nombre}"></td>
-
-            <td>
-
-                <!-- EDITAR -->
-                <a th:href="@{'/vista/donaciones/editar/' + ${d.id}}">
-                    Editar
-                </a>
-
-                <!-- ELIMINAR -->
-                <a th:href="@{'/vista/donaciones/eliminar/' + ${d.id}}">
-                    Eliminar
-                </a>
-
-            </td>
-
         </tr>
+    </table>
 
-    </tbody>
-
-</table>
+</div>
 
 </body>
 </html>

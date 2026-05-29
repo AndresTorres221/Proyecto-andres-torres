@@ -16,10 +16,10 @@ public class ProductoController {
         this.service = service;
     }
 
-    @PostMapping
-    public Producto guardar(@RequestBody Producto producto) {
-        return service.guardar(producto);
-    }
+   @PostMapping
+public Producto guardar(@ModelAttribute Producto producto) {
+    return service.guardar(producto);
+}
 
     @GetMapping
     public List<Producto> listar() {
