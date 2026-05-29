@@ -6,8 +6,8 @@
 | Campo | Tipo SQL | Restricciones | Descripción |
 |------|----------|---------------|-------------|
 | id | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Identificador del usuario |
-| nombre | VARCHAR(100) | NOT NULL | Nombre del usuario |
-| email | VARCHAR(100) | NOT NULL, UNIQUE | Correo electrónico |
+| nombre | VARCHAR(255) | NOT NULL | Nombre del usuario |
+| email | VARCHAR(255) | NOT NULL, UNIQUE | Correo electrónico |
 | password | VARCHAR(255) | NOT NULL | Contraseña |
 | rol_id | BIGINT | FOREIGN KEY | Relación con Rol |
 
@@ -18,7 +18,7 @@
 | Campo | Tipo SQL | Restricciones | Descripción |
 |------|----------|---------------|-------------|
 | id | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Identificador del rol |
-| nombre | VARCHAR(50) | NOT NULL | Nombre del rol (ADMIN, DONANTE, etc.) |
+| nombre | VARCHAR(255) | NOT NULL | Nombre del rol (ADMIN, DONANTE, etc.) |
 
 ---
 
@@ -27,9 +27,9 @@
 | Campo | Tipo SQL | Restricciones | Descripción |
 |------|----------|---------------|-------------|
 | id | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Identificador del donante |
-| nombre | VARCHAR(100) | NOT NULL | Nombre del donante |
-| telefono | VARCHAR(20) | NOT NULL | Teléfono |
-| direccion | VARCHAR(150) | NULL | Dirección |
+| nombre | VARCHAR(255) | NOT NULL | Nombre del donante |
+| telefono | VARCHAR(255) | NOT NULL | Teléfono |
+| direccion | VARCHAR(255) | NULL | Dirección |
 | usuario_id | BIGINT | FOREIGN KEY | Relación con Usuario |
 
 ---
@@ -39,8 +39,8 @@
 | Campo | Tipo SQL | Restricciones | Descripción |
 |------|----------|---------------|-------------|
 | id | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Identificador del producto |
-| nombre | VARCHAR(100) | NOT NULL | Nombre del producto |
-| descripcion | TEXT | NULL | Descripción |
+| nombre | VARCHAR(255) | NOT NULL | Nombre del producto |
+| descripcion | VARCHAR(255) | NULL | Descripción |
 | precio | DOUBLE | NOT NULL | Precio del producto |
 | cantidad | INT | NOT NULL | Cantidad disponible |
 | categoria_id | BIGINT | FOREIGN KEY | Relación con Categoría |
@@ -48,12 +48,12 @@
 
 ---
 
-#  5. CATEGORIA
+#  5. CATEGORIA_PRODUCTO
 
 | Campo | Tipo SQL | Restricciones | Descripción |
 |------|----------|---------------|-------------|
 | id | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Identificador |
-| nombre | VARCHAR(100) | NOT NULL | Nombre de la categoría |
+| nombre | VARCHAR(255) | NOT NULL | Nombre de la categoría |
 
 ---
 
@@ -62,7 +62,7 @@
 | Campo | Tipo SQL | Restricciones | Descripción |
 |------|----------|---------------|-------------|
 | id | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Identificador |
-| nombre | VARCHAR(50) | NOT NULL | Estado del producto (Bueno, Regular, Malo) |
+| nombre | VARCHAR(255) | NOT NULL | Estado del producto (Bueno, Regular, Malo) |
 
 ---
 
@@ -93,7 +93,7 @@
 |------|----------|---------------|-------------|
 | id | BIGINT | PRIMARY KEY, AUTO_INCREMENT | Identificador |
 | producto_id | BIGINT | FOREIGN KEY | Relación con Producto |
-| stock | INT | NOT NULL | Cantidad disponible en inventario |
+| cantidad | INT | NOT NULL | Cantidad disponible en inventario |
 
 ---
 

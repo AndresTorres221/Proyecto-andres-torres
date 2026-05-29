@@ -1,7 +1,7 @@
 package com.desarrolloweb.intro.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import jakarta.persistence.*;
 
