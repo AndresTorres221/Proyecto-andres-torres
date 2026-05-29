@@ -1,174 +1,169 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>CRUD Productos</title>
+<meta charset="UTF-8">
+<title>CRUD Productos</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 30px;
-        }
+<style>
+    body {
+        font-family: Arial;
+        background: #eef1f5;
+        margin: 0;
+    }
 
-        h1 {
-            text-align: center;
-        }
+    h1 {
+        text-align: center;
+        background: white;
+        padding: 15px;
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+    }
 
-        form {
-            margin-bottom: 20px;
-        }
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-        input, select {
-            padding: 8px;
-            margin: 5px;
-        }
+    form {
+        background: #fafafa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
 
-        button {
-            padding: 8px 15px;
-            cursor: pointer;
-        }
+    input, select {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0;
+        box-sizing: border-box;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    button {
+        width: 100%;
+        padding: 10px;
+        background: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+    }
 
-        th, td {
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: center;
-        }
+    button:hover {
+        background: #555;
+    }
 
-        th {
-            background-color: #f2f2f2;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
 
-        a {
-            margin: 5px;
-        }
-    </style>
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
 
+    th {
+        background: #f2f2f2;
+    }
+
+    a {
+        margin: 0 5px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #000;
+    }
+</style>
 </head>
 
 <body>
 
-<h1>CRUD DE PRODUCTOS</h1>
+<h1>CRUD PRODUCTOS</h1>
 
+<div class="container">
 
-<form th:action="@{/vista/productos}" method="post">
+<!-- FORMULARIO -->
+<form th:action="@{/vista/productos}" th:object="${producto}" method="post">
 
-    <input type="hidden"
-           name="id"
-           th:value="${producto != null ? producto.id : ''}">
+    <!-- ID (IMPORTANTE PARA EDITAR) -->
+    <input type="hidden" th:field="*{id}">
 
-    <input type="text"
-           name="nombre"
-           placeholder="Nombre"
-           required
-           th:value="${producto != null ? producto.nombre : ''}">
+    <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
 
-    <input type="text"
-           name="descripcion"
-           placeholder="Descripción"
-           th:value="${producto != null ? producto.descripcion : ''}">
+    <input type="text" th:field="*{descripcion}" placeholder="Descripción">
 
-    <input type="number"
-           step="0.01"
-           name="precio"
-           placeholder="Precio"
-           required
-           th:value="${producto != null ? producto.precio : ''}">
+    <input type="number" th:field="*{precio}" placeholder="Precio" required>
 
-    <input type="number"
-           name="cantidad"
-           placeholder="Cantidad"
-           required
-           th:value="${producto != null ? producto.cantidad : ''}">
+    <input type="number" th:field="*{cantidad}" placeholder="Cantidad" required>
 
-   
-    <select name="categoria.id" required>
-
+    <!-- CATEGORÍA (CORRECTO) -->
+    <select th:field="*{categoria.id}" required>
         <option value="">Seleccione categoría</option>
 
         <option th:each="c : ${categorias}"
                 th:value="${c.id}"
-                th:text="${c.nombre}"
-                th:selected="${producto != null and producto.categoria != null and producto.categoria.id == c.id}">
+                th:text="${c.nombre}">
         </option>
-
     </select>
 
-   
-    <select name="estado.id" required>
-
+    <!-- ESTADO (CORRECTO) -->
+    <select th:field="*{estado.id}" required>
         <option value="">Seleccione estado</option>
 
         <option th:each="e : ${estados}"
                 th:value="${e.id}"
-                th:text="${e.nombre}"
-                th:selected="${producto != null and producto.estado != null and producto.estado.id == e.id}">
+                th:text="${e.nombre}">
         </option>
-
     </select>
 
-    <button type="submit">
-        <span th:text="${producto != null ? 'Actualizar' : 'Guardar'}"></span>
-    </button>
-
+    <button type="submit">Guardar Producto</button>
 </form>
 
-<hr>
-
-
+<!-- TABLA -->
 <table>
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Categoría</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
 
-            <!-- NUEVO -->
-            <th>Categoría</th>
-            <th>Estado</th>
+    <tr th:each="p : ${productos}">
 
-            <th>Acciones</th>
-        </tr>
-    </thead>
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.nombre}"></td>
+        <td th:text="${p.descripcion}"></td>
+        <td th:text="${p.precio}"></td>
+        <td th:text="${p.cantidad}"></td>
 
-    <tbody>
+        <td th:text="${p.categoria != null ? p.categoria.nombre : 'N/A'}"></td>
+        <td th:text="${p.estado != null ? p.estado.nombre : 'N/A'}"></td>
 
-        <tr th:each="p : ${productos}">
+        <td>
+            <a th:href="@{'/vista/productos/editar/' + ${p.id}}">Editar</a>
+            <a th:href="@{'/vista/productos/eliminar/' + ${p.id}}">Eliminar</a>
+        </td>
 
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.nombre}"></td>
-            <td th:text="${p.descripcion}"></td>
-            <td th:text="${p.precio}"></td>
-            <td th:text="${p.cantidad}"></td>
-
-            
-            <td th:text="${p.categoria?.nombre}"></td>
-            <td th:text="${p.estado?.nombre}"></td>
-
-            <td>
-
-                <a th:href="@{'/vista/productos/editar/' + ${p.id}}">
-                    Editar
-                </a>
-
-                <a th:href="@{'/vista/productos/eliminar/' + ${p.id}}">
-                    Eliminar
-                </a>
-
-            </td>
-
-        </tr>
-
-    </tbody>
+    </tr>
 
 </table>
+
+</div>
 
 </body>
 </html>

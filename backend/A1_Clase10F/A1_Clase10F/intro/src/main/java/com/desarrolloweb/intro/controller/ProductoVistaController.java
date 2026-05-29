@@ -4,6 +4,7 @@ import com.desarrolloweb.intro.model.Producto;
 import com.desarrolloweb.intro.service.ProductoService;
 import com.desarrolloweb.intro.service.CategoriaProductoService;
 import com.desarrolloweb.intro.service.EstadoConservacionService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,57 +13,61 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/vista/productos")
 public class ProductoVistaController {
 
-    private final ProductoService service;
+    private final ProductoService productoService;
     private final CategoriaProductoService categoriaService;
     private final EstadoConservacionService estadoService;
 
-    public ProductoVistaController(
-            ProductoService service,
-            CategoriaProductoService categoriaService,
-            EstadoConservacionService estadoService
-    ) {
-        this.service = service;
+    public ProductoVistaController(ProductoService productoService,
+                                   CategoriaProductoService categoriaService,
+                                   EstadoConservacionService estadoService) {
+        this.productoService = productoService;
         this.categoriaService = categoriaService;
         this.estadoService = estadoService;
     }
 
-   
+    // LISTAR
     @GetMapping
     public String listar(Model model) {
 
-        model.addAttribute("productos", service.listar());
+        model.addAttribute("productos", productoService.listar());
+        model.addAttribute("producto", new Producto());
 
-       
         model.addAttribute("categorias", categoriaService.listar());
         model.addAttribute("estados", estadoService.listar());
 
         return "productos";
     }
 
-
+    // GUARDAR (CREATE + UPDATE)
     @PostMapping
     public String guardar(@ModelAttribute Producto producto) {
-        service.guardar(producto);
+
+        productoService.guardar(producto);
+
         return "redirect:/vista/productos";
     }
 
-   
+    // EDITAR
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+
+        Producto producto = productoService.buscar(id);
+
+        model.addAttribute("producto", producto);
+        model.addAttribute("productos", productoService.listar());
+
+        model.addAttribute("categorias", categoriaService.listar());
+        model.addAttribute("estados", estadoService.listar());
+
+        return "productos";
+    }
+
+    // ELIMINAR
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
-        service.eliminar(id);
+
+        productoService.eliminar(id);
+
         return "redirect:/vista/productos";
     }
-
-    @GetMapping("/editar/{id}")
-public String editar(@PathVariable Long id, Model model) {
-
-    Producto producto = service.buscar(id);
-
-    model.addAttribute("producto", producto);
-    model.addAttribute("productos", service.listar());
-    model.addAttribute("categorias", categoriaService.listar());
-    model.addAttribute("estados", estadoService.listar());
-
-    return "productos";
-}
 }

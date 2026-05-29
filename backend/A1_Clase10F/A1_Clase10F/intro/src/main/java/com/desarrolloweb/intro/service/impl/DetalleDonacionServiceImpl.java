@@ -26,19 +26,27 @@ public class DetalleDonacionServiceImpl implements DetalleDonacionService {
     private ProductoRepository productoRepository;
 
     @Override
-    public DetalleDonacion guardar(DetalleDonacion detalle) {
+public DetalleDonacion guardar(DetalleDonacion detalle) {
 
-        Donacion donacion = donacionRepository.findById(detalle.getDonacion().getId())
-                .orElseThrow(() -> new RuntimeException("Donación no existe"));
-
-        Producto producto = productoRepository.findById(detalle.getProducto().getId())
-                .orElseThrow(() -> new RuntimeException("Producto no existe"));
-
-        detalle.setDonacion(donacion);
-        detalle.setProducto(producto);
-
-        return detalleRepository.save(detalle);
+    if (detalle.getDonacion() == null || detalle.getDonacion().getId() == null) {
+        throw new RuntimeException("Donación no enviada desde el formulario");
     }
+
+    if (detalle.getProducto() == null || detalle.getProducto().getId() == null) {
+        throw new RuntimeException("Producto no enviado desde el formulario");
+    }
+
+    Donacion donacion = donacionRepository.findById(detalle.getDonacion().getId())
+            .orElseThrow(() -> new RuntimeException("Donación no existe"));
+
+    Producto producto = productoRepository.findById(detalle.getProducto().getId())
+            .orElseThrow(() -> new RuntimeException("Producto no existe"));
+
+    detalle.setDonacion(donacion);
+    detalle.setProducto(producto);
+
+    return detalleRepository.save(detalle);
+}
 
     @Override
     public List<DetalleDonacion> listar() {

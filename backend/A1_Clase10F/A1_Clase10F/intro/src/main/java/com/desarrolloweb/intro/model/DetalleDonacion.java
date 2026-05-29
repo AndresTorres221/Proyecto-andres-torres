@@ -17,7 +17,6 @@ public class DetalleDonacion {
 
     @ManyToOne
     @JoinColumn(name = "donacion_id")
-    @JsonIgnore
     private Donacion donacion;
 
     @ManyToOne

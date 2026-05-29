@@ -1,6 +1,7 @@
 package com.desarrolloweb.intro.controller;
 
-import com.desarrolloweb.intro.dto.DonacionDTO;
+
+import com.desarrolloweb.intro.model.DetalleDonacion;
 import com.desarrolloweb.intro.model.Donacion;
 import com.desarrolloweb.intro.service.DetalleDonacionService;
 import com.desarrolloweb.intro.service.DonacionService;
@@ -31,41 +32,34 @@ public class DonacionVistaController {
     }
 
     // LISTAR
-    @GetMapping
-    public String listar(Model model) {
+  @GetMapping
+public String listar(Model model) {
 
-        model.addAttribute("donaciones", donacionService.listar());
-        model.addAttribute("donantes", donanteService.listar());
-        model.addAttribute("donacion", new Donacion());
-        model.addAttribute("productos", productoService.listar());
-        model.addAttribute("detalles", detalleService.listar());
+    model.addAttribute("donaciones", donacionService.listar());
+    model.addAttribute("donantes", donanteService.listar());
+    model.addAttribute("productos", productoService.listar());
+    model.addAttribute("detalles", detalleService.listar());
 
-        return "donaciones";
-    }
+    model.addAttribute("donacion", new Donacion());
+    model.addAttribute("detalle", new DetalleDonacion());
 
-    // GUARDAR
-    @PostMapping
-    public String guardar(@ModelAttribute Donacion donacion) {
+    return "detalle_donacion";
+}
 
-        donacionService.guardar(donacion);
+@GetMapping("/editar/{id}")
+public String editar(@PathVariable Long id, Model model) {
 
-        return "redirect:/vista/donaciones";
-    }
+    Donacion donacion = donacionService.buscar(id);
 
-    // EDITAR
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model) {
+    model.addAttribute("donacion", donacion);
+    model.addAttribute("donaciones", donacionService.listar());
+    model.addAttribute("donantes", donanteService.listar());
+    model.addAttribute("productos", productoService.listar());
+    model.addAttribute("detalles", detalleService.listar());
+    model.addAttribute("detalle", new DetalleDonacion());
 
-        DonacionDTO donacion = donacionService.buscar(id);
-
-        model.addAttribute("donacion", donacion);
-        model.addAttribute("donaciones", donacionService.listar());
-        model.addAttribute("donantes", donanteService.listar());
-        model.addAttribute("productos", productoService.listar());
-        model.addAttribute("detalles", detalleService.listar());
-
-        return "donaciones";
-    }
+    return "detalle_donacion";
+}
 
     // ELIMINAR
     @GetMapping("/eliminar/{id}")
@@ -75,4 +69,12 @@ public class DonacionVistaController {
 
         return "redirect:/vista/donaciones";
     }
+
+    @PostMapping
+public String guardar(@ModelAttribute Donacion donacion) {
+
+    donacionService.guardar(donacion);
+
+    return "redirect:/vista/donaciones";
+}
 }

@@ -1,5 +1,7 @@
 package com.desarrolloweb.intro.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +26,8 @@ public class Producto {
     @JoinColumn(name = "estado_id")
     private EstadoConservacion estado;
 
+   @OneToMany(mappedBy = "producto")
+private List<DetalleDonacion> detalles;
     
 
     public Long getId() {

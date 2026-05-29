@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
-
 @Entity
 @Table(name = "donacion")
 public class Donacion {
@@ -16,14 +14,17 @@ public class Donacion {
 
     private LocalDate fecha;
 
-    
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Optimizado a LAZY
     @JoinColumn(name = "donante_id")
     private Donante donante;
 
-    
-   @OneToMany(mappedBy = "donacion", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-private List<DetalleDonacion> detalles;
+    // CORRECCIÓN: Se añade orphanRemoval = true y cambiamos a LAZY para evitar consultas pesadas duplicadas
+    @OneToMany(mappedBy = "donacion", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DetalleDonacion> detalles;
+
+    public Donacion() {
+    }
+
     public Long getId() {
         return id;
     }

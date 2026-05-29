@@ -1,6 +1,6 @@
 package com.desarrolloweb.intro.controller;
 
-import com.desarrolloweb.intro.dto.DonacionDTO;
+
 import com.desarrolloweb.intro.model.Donacion;
 import com.desarrolloweb.intro.service.DonacionService;
 import org.springframework.web.bind.annotation.*;
@@ -22,19 +22,16 @@ public class DonacionController {
         return service.guardar(donacion);
     }
 
-   
     @GetMapping
-    public List<DonacionDTO> listar() {
+    public List<Donacion> listar() {
         return service.listar();
     }
 
-    
     @GetMapping("/{id}")
-    public DonacionDTO buscar(@PathVariable Long id) {
+    public Donacion buscar(@PathVariable Long id) {
         return service.buscar(id);
     }
 
-    
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
         service.eliminar(id);
