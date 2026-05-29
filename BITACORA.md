@@ -126,7 +126,7 @@ Resultados:
 
 ---
 
-Iteración 10 - Implementación de interfaz web (Thymeleaf)
+## Iteración 10 - Implementación de interfaz web (Thymeleaf)
 
 Se implementó la capa visual del sistema utilizando Thymeleaf para los módulos principales, especialmente:
 
@@ -151,7 +151,7 @@ Resultado:
 
 ---
 
-Iteración 11 - Problemas en edición y eliminación (Detalle de donación)
+## Iteración 11 - Problemas en edición y eliminación (Detalle de donación)
 
 Durante la implementación del CRUD visual del módulo de detalle de donaciones se presentaron errores en:
 
@@ -176,7 +176,7 @@ Resultado:
 
 ---
 
-Iteración 12 - Estabilización del sistema CRUD visual
+## Iteración 12 - Estabilización del sistema CRUD visual
 
 Se realizaron ajustes finales para estabilizar el sistema completo de interfaz web:
 
