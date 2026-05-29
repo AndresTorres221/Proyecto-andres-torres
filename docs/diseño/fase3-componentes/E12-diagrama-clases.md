@@ -1,2 +1,2 @@
 # Diagrama de Clases
-![Diagrama de clases](../imagenes/diagrama-clases.jpg)
+![Diagrama de clases](../imagenes/diagrama-clases1.jpg)
