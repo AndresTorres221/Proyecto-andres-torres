@@ -82,3 +82,45 @@ Porque facilita el desarrollo rápido de APIs REST, manejo de persistencia y esc
 
 ###  Artefacto de diseño que respalda esta decisión
 Arquitectura Spring Boot + ORM (Object Relational Mapping).
+
+## Decisión #07
+
+### ¿Qué decidí?
+Implementar el módulo de detalle de donaciones como una entidad independiente (`DetalleDonacion`) con su propio CRUD y formulario en Thymeleaf, en lugar de manejar los productos donados directamente dentro de `Donacion`.
+
+### ¿Por qué?
+Porque se necesita modelar correctamente una relación de tipo “cabecera-detalle”, donde:
+- Una donación puede contener múltiples productos
+- Cada producto tiene una cantidad independiente
+- Se requiere control individual de cada registro
+
+Esto mejora:
+- Escalabilidad del sistema
+- Claridad en la estructura de datos
+- Gestión independiente de cada detalle de donación
+
+### ¿Qué artefacto de diseño respalda esta decisión?
+- Modelo entidad-relación (ERD)
+- Patrón Cabecera – Detalle (Master-Detail)
+- Diagrama de clases UML
+
+---
+
+## Decisión #08
+
+### ¿Qué decidí?
+Implementar formularios dinámicos en Thymeleaf utilizando `th:object` y `th:field` para permitir la creación y edición de entidades en la misma vista (CRUD unificado).
+
+### ¿Por qué?
+Porque permite:
+- Reutilizar el mismo formulario para crear y editar
+- Evitar duplicación de vistas
+- Facilitar el binding automático de Spring MVC
+- Mejorar la experiencia de usuario en el CRUD visual
+
+Además, fue necesario para resolver problemas de edición en `DetalleDonacion`, donde el formulario no persistía correctamente los cambios sin el uso de `th:object`.
+
+### ¿Qué artefacto de diseño respalda esta decisión?
+- Patrón MVC con Thymeleaf
+- Form Binding de Spring MVC
+- Diseño de interfaz CRUD unificado
