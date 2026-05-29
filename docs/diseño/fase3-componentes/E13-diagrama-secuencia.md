@@ -12,12 +12,7 @@
 
 
 ## 1.Registro de Donación
-![Registro de donacion](../imagenes/registro-donacion.jpg)
+![digrama de secuencia](../imagenes/diagrama-secuencia.jpg)
 
 
-## 2.Registro de Entrega
-![Registro de entrega](../imagenes/registro-entrega.jpg)
 
-
-## 3.Autenticacion de Usuario (con flujo alternativo)
-![Autenticacion de usuario](../imagenes/autenticacion-usuario.jpg)
