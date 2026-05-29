@@ -52,4 +52,17 @@ public class ProductoVistaController {
         service.eliminar(id);
         return "redirect:/vista/productos";
     }
+
+    @GetMapping("/editar/{id}")
+public String editar(@PathVariable Long id, Model model) {
+
+    Producto producto = service.buscar(id);
+
+    model.addAttribute("producto", producto);
+    model.addAttribute("productos", service.listar());
+    model.addAttribute("categorias", categoriaService.listar());
+    model.addAttribute("estados", estadoService.listar());
+
+    return "productos";
+}
 }
